@@ -3,304 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyCodex</title>
+<meta name="theme-color" content="#0b1020">
+
+<title>StudyCodex — Student AI</title>
 
 <style>
+:root {
+  --bg: #0b1020;
+  --panel: #11182b;
+  --panel2: #18213a;
+  --border: #2a3553;
+  --text: #f4f7ff;
+  --muted: #9ca8c2;
+  --accent: #6ea8fe;
+  --accent2: #8b7cff;
+  --user: #29456f;
+  --ai: #192238;
+  --danger: #ff6b6b;
+  --success: #69db7c;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #101218;
-  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
+/* HEADER */
+
 header {
-  padding: 18px;
-  background: #181b24;
-  border-bottom: 1px solid #303542;
+  height: 64px;
+  padding: 0 18px;
+  background: rgba(17, 24, 43, 0.96);
+  border-bottom: 1px solid var(--border);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .logo {
-  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 20px;
   font-weight: bold;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .status {
-  color: #7ee787;
-  font-size: 13px;
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 25px;
-}
-
-h1 {
-  font-size: 38px;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  color: #aab1bf;
-}
-
-.modes {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 25px 0;
-}
-
-.mode {
-  background: #202532;
-  color: white;
-  border: 1px solid #343b4b;
-  border-radius: 10px;
-  padding: 10px 15px;
-}
-
-.mode:hover {
-  background: #2b3342;
-}
-
-.chat {
-  min-height: 280px;
-  background: #171a22;
-  border: 1px solid #303542;
-  border-radius: 15px;
-  padding: 18px;
-  overflow-y: auto;
-}
-
-.message {
-  margin: 12px 0;
-  padding: 12px 15px;
-  border-radius: 12px;
-  white-space: pre-wrap;
-}
-
-.user {
-  background: #263b63;
-}
-
-.ai {
-  background: #222733;
-}
-
-.composer {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-textarea {
-  flex: 1;
-  min-height: 55px;
-  resize: vertical;
-  background: #171a22;
-  color: white;
-  border: 1px solid #303542;
-  border-radius: 12px;
-  padding: 15px;
-}
-
-button {
-  cursor: pointer;
-}
-
-.send {
-  background: #6ea8fe;
-  color: #08111f;
-  border: none;
-  border-radius: 12px;
-  padding: 0 22px;
-  font-weight: bold;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.card {
-  background: #171a22;
-  border: 1px solid #303542;
-  border-radius: 12px;
-  padding: 18px;
-  cursor: pointer;
-}
-
-.card:hover {
-  background: #202532;
-}
-
-footer {
-  text-align: center;
-  color: #7f8796;
   font-size: 12px;
-  margin: 20px;
+  color: var(--success);
 }
 
-@media(max-width:600px) {
-  h1 {
-    font-size: 30px;
-  }
-
-  .container {
-    padding: 16px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  .composer {
-    flex-direction: column;
-  }
-
-  .send {
-    padding: 14px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <div class="logo">📚 StudyCodex</div>
-  <div class="status">● Demo Mode</div>
-</header>
-
-<div class="container">
-
-  <h1>What are you studying?</h1>
-
-  <p class="subtitle">
-    Your student study assistant for learning, coding and organizing ideas.
-  </p>
-
-  <div class="modes">
-    <button class="mode" onclick="setMode('Study')">📖 Study</button>
-    <button class="mode" onclick="setMode('Homework')">📝 Homework</button>
-    <button class="mode" onclick="setMode('Code')">💻 Code</button>
-    <button class="mode" onclick="setMode('Summarize')">📋 Summarize</button>
-    <button class="mode" onclick="setMode('Brainstorm')">💡 Brainstorm</button>
-  </div>
-
-  <div class="chat" id="chat">
-
-    <div class="message ai">
-      👋 Welcome to StudyCodex!
-
-      Choose a mode and ask me something.
-
-      This version is a free demo running on GitHub Pages.
-    </div>
-
-  </div>
-
-  <div class="composer">
-
-    <textarea
-      id="question"
-      placeholder="Ask StudyCodex something..."
-    ></textarea>
-
-    <button class="send" onclick="sendMessage()">
-      Send
-    </button>
-
-  </div>
-
-  <div class="cards">
-
-    <div class="card"
-      onclick="quickAsk('Explain photosynthesis simply.')">
-      🧪 Explain a science topic
-    </div>
-
-    <div class="card"
-      onclick="quickAsk('Help me understand a maths problem step by step.')">
-      ➗ Understand maths
-    </div>
-
-    <div class="card"
-      onclick="quickAsk('Give me a beginner HTML coding exercise.')">
-      💻 Practice coding
-    </div>
-
-    <div class="card"
-      onclick="quickAsk('Help me organize my study notes.')">
-      📚 Organize my notes
-    </div>
-
-  </div>
-
-</div>
-
-<footer>
-  Study honestly • Follow your school's AI rules • Understand your work
-</footer>
-
-<script>
-
-let currentMode = "Study";
-
-function setMode(mode) {
-  currentMode = mode;
-
-  addMessage(
-    "ai",
-    "Mode changed to: " + mode + "\n\nWhat would you like help with?"
-  );
-}
-
-function quickAsk(text) {
-  document.getElementById("question").value = text;
-  sendMessage();
-}
-
-function sendMessage() {
-
-  const box = document.getElementById("question");
-  const question = box.value.trim();
-
-  if (!question) return;
-
-  addMessage("user", question);
-
-  box.value = "";
-
-  setTimeout(function() {
-
-    let answer = "";
-
-    if (currentMode === "Code") {
-
-      answer =
-        "💻 Code Mode\n\n" +
-        "I can help you understand programming, debug code, " +
-        "and practice writing HTML, CSS and JavaScript.\n\n" +
-        "Your question was:\n" +
-        question;
-
-    } else if (currentMode === "Summarize") {
-
-      answer =
-        "📋 Summarize Mode\n\n" +
-        "Paste your notes or text here and StudyCodex can " +
-        "organize the main ideas.\n\n" +
-        "Your text:\n" +
-        question;
-
-    } else if (currentMode === "Homework") {
+.icon-button {
+  border: 1px solid
